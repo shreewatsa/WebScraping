@@ -1,38 +1,48 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Scraping Instagram images with selenium and requests API .
 
 from selenium import webdriver
 import requests
 driver = webdriver.Chrome()
 
 #Log into instagram .
-#driver.get("http://www.instagram.com/accounts/login")
-#driver.sleep(10)
-#userName = driver.find_element_by_name('username')
-#password = driver.find_element_by_name('password')
-#userName.clear()
-#userName.send_keys('yourLoginUserName')
-#password.clear()
-#password.send_keys('yourLoginPassword')
-#loginButton = driver.find_element_by_xpath('//form/span/button[text()="Log in"]')
-#loginButton.click()
+#def login(username , password):
+    #driver.get("http://www.instagram.com/accounts/login")
+    #driver.sleep(10)
+    #userName = driver.find_element_by_name('username')
+    #password = driver.find_element_by_name('password')
+    #userName.clear()
+    #userName.send_keys('username')
+    #password.clear()
+    #password.send_keys('password')
+    #loginButton = driver.find_element_by_xpath('//form/span/button[text()="Log in"]')
+    #loginButton.click()
 
 #Search with token and select the first image after search .
-token = 'fashion'
-driver.get('https://www.instagram.com/explore/tags/'+token)
-firstImage = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a')
-firstImage.click()
+def searchToken(token):
+    driver.get('https://www.instagram.com/explore/tags/'+token)
+    firstImage = driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a')
+    firstImage.click()
 
-#Finding the image link and next page link
-
-
-#Downloading image
-imageLink = 'https://instagram.fktm4-1.fna.fbcdn.net/vp/712f4317116593b1d412c194aed88ba5/5C0992E6/t51.2885-15/e35/37866154_240567450116777_351802390418030592_n.jpg'
-def saveImage(url):
+#Image Download function
+def saveImage(url , i):
     r = requests.get(url , stream=True)
-    filename = 'image'
+    filename = 'image' + str(i)
     with open(filename , 'wb') as fd:
         for chunk in r.iter_content(chunk_size=10000):
             fd.write(chunk)
-saveImage(imageLink)
+
+#Finding the image links
+def findAndDownloadLinks():
+    i = 0
+    imgElems = driver.find_elements_by_tag_name('img')
+    for img in imgElems:
+        i = i+1
+        link = img.get_attribute('src')
+        if(link):
+            saveImage(img.get_attribute('src'), i)
+
+if __name__ == '__main__':
+    token = 'fashion'
+    searchToken(token)
+    findAndDownloadLinks()
