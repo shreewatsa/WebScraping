@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# To run this file , type in command line : python insta.py
 
 from selenium import webdriver
 import requests
