@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Scraping Instagram images with selenium and requests API .
 
 from selenium import webdriver
 import requests
@@ -11,9 +12,9 @@ driver = webdriver.Chrome()
 #userName = driver.find_element_by_name('username')
 #password = driver.find_element_by_name('password')
 #userName.clear()
-#userName.send_keys('Ram')
+#userName.send_keys('yourLoginUserName')
 #password.clear()
-#password.send_keys('Ram123')
+#password.send_keys('yourLoginPassword')
 #loginButton = driver.find_element_by_xpath('//form/span/button[text()="Log in"]')
 #loginButton.click()
 
